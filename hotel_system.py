@@ -64,7 +64,7 @@ class HotelReservationSystem:
         extra_charges.append(25.0) 
         
         total_extras = sum(extra_charges)
-        total_amount = base_cost + total_extras
+        total_amount = max(base_cost + total_extras, 0)
         
         return {
             "guest_name": res["guest_name"],
