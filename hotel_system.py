@@ -15,9 +15,8 @@ class HotelReservationSystem:
         if room_id not in self.rooms:
             raise KeyError("Room does not exist")
             
-        if self.rooms[room_id]["is_booked"]:
+        if self.rooms[room_id]["is_booked"] and res_id not in self.reservations.get(res_id, {}).get("cancelled_reservations", []):
             raise ValueError("Room is already booked")
-
         fmt = "%Y-%m-%d"
         checkin_date = datetime.strptime(checkin_str, fmt)
         checkout_date = datetime.strptime(checkout_str, fmt)
