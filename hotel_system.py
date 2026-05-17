@@ -15,7 +15,7 @@ class HotelReservationSystem:
         if room_id not in self.rooms:
             raise KeyError("Room does not exist")
             
-        if self.rooms[room_id]["is_booked"] and res_id not in self.reservations.get(res_id, {}).get("cancelled_reservations", []):
+        if self.rooms[room_id]["is_booked"]: 
             raise ValueError("Room is already booked")
         fmt = "%Y-%m-%d"
         checkin_date = datetime.strptime(checkin_str, fmt)
@@ -60,7 +60,7 @@ class HotelReservationSystem:
         base_cost = room["price_per_night"] * res["nights"]
         
         # Simulate an automatic cleaning fee added to extra charges
-        extra_charges.append(25.0) 
+        extra_charges = [] 
         
         total_extras = sum(extra_charges)
         total_amount = max(base_cost + total_extras, 0)
