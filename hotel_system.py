@@ -23,6 +23,8 @@ class HotelReservationSystem:
         checkout_date = datetime.strptime(checkout_str, fmt)
 
         nights = (checkout_date - checkin_date).days
+        if nights <= 0:
+            raise ValueError("Check-out must be after check-in")
         
         res_id = f"RES-{self.reservation_counter}"
         self.reservation_counter += 1
@@ -48,10 +50,11 @@ class HotelReservationSystem:
             return False
             
         res["status"] = "CANCELLED"
+        self.rooms[res["room_id"]]["is_booked"] = False
         
         return True
 
-    def generate_invoice(self, res_id, extra_charges=[]):
+    def generate_invoice(self, res_id, extra_charges=None):
         if res_id not in self.reservations:
             raise KeyError("Reservation not found")
             
@@ -61,7 +64,9 @@ class HotelReservationSystem:
         base_cost = room["price_per_night"] * res["nights"]
         
         # Simulate an automatic cleaning fee added to extra charges
-        extra_charges.append(25.0) 
+        if extra_charges is None:
+            extra_charges = []
+        extra_charges = list(extra_charges) + [25.0]
         
         total_extras = sum(extra_charges)
         total_amount = base_cost + total_extras
