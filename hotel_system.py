@@ -48,6 +48,7 @@ class HotelReservationSystem:
             return False
             
         res["status"] = "CANCELLED"
+        self.rooms[res["room_id"]]["is_booked"] = False
         
         return True
 
