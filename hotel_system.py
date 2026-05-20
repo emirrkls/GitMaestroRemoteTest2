@@ -22,7 +22,7 @@ class HotelReservationSystem:
         checkin_date = datetime.strptime(checkin_str, fmt)
         checkout_date = datetime.strptime(checkout_str, fmt)
 
-        nights = (checkout_date - checkin_date).days
+        nights = max((checkout_date - checkin_date).days, 0)
         
         res_id = f"RES-{self.reservation_counter}"
         self.reservation_counter += 1
